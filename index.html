@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETRANQUIEM | Req</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>ETRANQUIEM // TERMINAL</title>
     <style>
         * {
             margin: 0;
@@ -12,156 +11,142 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #050505;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #080808;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
             min-height: 100vh;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
+            flex-direction: column;
+            justify-content: flex-start;
         }
-        #bg-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Scanline effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .terminal {
+            max-width: 800px;
             width: 100%;
-            height: 100%;
+            margin: 0 auto;
             z-index: 1;
-            opacity: 0.45;
         }
-        .card {
-            position: relative;
-            z-index: 2;
-            width: 90%;
-            max-width: 500px;
-            background: rgba(18, 18, 20, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 36px 28px;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        pre {
+            font-size: 0.7rem;
+            line-height: 1.1;
+            color: #00ff66;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
-        .status-badge {
-            display: inline-block;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #888;
-            margin-bottom: 24px;
+        @media (min-width: 600px) {
+            pre { font-size: 0.9rem; }
         }
-        .status-badge span {
-            color: #ff4757;
-            margin-right: 6px;
-        }
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-        .tagline {
-            font-size: 0.9rem;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 24px;
-        }
-        .quote {
-            font-size: 0.95rem;
-            font-style: italic;
-            color: #bbb;
+        .output {
             line-height: 1.6;
-            margin-bottom: 28px;
-            padding: 0 10px;
-            border-left: 2px solid rgba(255, 255, 255, 0.3);
-            text-align: left;
+            margin-bottom: 10px;
+            color: #b0ffce;
         }
-        .links {
+        .input-line {
             display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
         }
-        .btn {
-            text-decoration: none;
-            color: #fff;
-            font-size: 0.85rem;
-            padding: 10px 20px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.3s ease;
+        .prompt {
+            color: #00ff66;
+            margin-right: 10px;
         }
-        .btn:hover {
-            background: #ffffff;
-            color: #000000;
-            transform: translateY(-2px);
+        input {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+            flex: 1;
+        }
+        a {
+            color: #ff0055;
+            text-decoration: underline;
+        }
+        .dim {
+            color: #558866;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+<div class="terminal">
+<pre>
+ _____ _____ ____    _    _   _  ___  _   _ ___ _____ __  __ 
+| ____|_   _|  _ \  / \  | \ | |/ _ \| | | |_ _| ____|  \/  |
+|  _|   | | | |_) |/ _ \ |  \| | | | | | | | | |  _| | |\/| |
+| |___  | | |  _ < / ___ \| |\  | |_| | |_| | | | |___| |  | |
+|_____| |_| |_| \_/_/   \_\_| \_|\__\_\\___/ |___|_____|_|  |_|
+</pre>
 
-    <div class="card">
-        <div class="status-badge"><span>●</span> Offline / Building</div>
-        <h1>REQ</h1>
-        <p class="tagline">Animator & 3D Modeler</p>
-        
-        <div class="quote">
-            "We buy things we don't need with money we don't have to impress people we don't like."
-        </div>
-
-        <div class="links">
-            <a href="https://discord.com" target="_blank" class="btn">Discord</a>
-            <a href="mailto:your-email@gmail.com" class="btn">Contact</a>
+    <div id="history">
+        <div class="output">
+            SYSTEM STATUS: <span style="color: #ffaa00;">DEVELOPMENT IN PROGRESS...</span><br>
+            USER: Req (Animator & 3D Modeler)<br>
+            <span class="dim">Type <span style="color:#fff;">'help'</span> to see available terminal commands.</span>
         </div>
     </div>
 
-    <script>
-        // Simple Three.js Wireframe Sphere Scene
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+    <div class="input-line">
+        <span class="prompt">req@etranquiem:~$</span>
+        <input type="text" id="cmd" autofocus autocomplete="off" spellcheck="false">
+    </div>
+</div>
 
-        const geometry = new THREE.IcosahedronGeometry(10, 2);
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.15 });
-        const sphere = new THREE.Mesh(geometry, material);
-        scene.add(sphere);
+<script>
+    const input = document.getElementById('cmd');
+    const history = document.getElementById('history');
 
-        camera.position.z = 18;
+    const commands = {
+        'help': 'Available commands: <br>- <span style="color:#fff;">about</span>: User & server info<br>- <span style="color:#fff;">quote</span>: Profile message<br>- <span style="color:#fff;">socials</span>: External links<br>- <span style="color:#fff;">clear</span>: Clear screen',
+        'about': 'REQ // Animator & 3D Modeler.<br>Currently assembling assets & portfolio render reels.',
+        'quote': '"We buy things we don\'t need with money we don\'t have to impress people we don\'t like."',
+        'socials': 'DISCORD: etranquiem<br>CONTACT: <a href="mailto:your-email@gmail.com">Send Mail</a>',
+        'clear': 'CLEAR'
+    };
 
-        // Mouse interaction
-        let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth / 2) * 0.0005;
-            mouseY = (e.clientY - window.innerHeight / 2) * 0.0005;
-        });
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const val = input.value.trim().toLowerCase();
+            input.value = '';
 
-        function animate() {
-            requestAnimationFrame(animate);
-            sphere.rotation.x += 0.002 + mouseY * 0.1;
-            sphere.rotation.y += 0.003 + mouseX * 0.1;
-            renderer.render(scene, camera);
+            const line = document.createElement('div');
+            line.className = 'output';
+            line.innerHTML = `<span class="prompt">req@etranquiem:~$</span> ${val}`;
+            history.appendChild(line);
+
+            if (val === 'clear') {
+                history.innerHTML = '';
+            } else if (commands[val]) {
+                const res = document.createElement('div');
+                res.className = 'output';
+                res.innerHTML = commands[val];
+                history.appendChild(res);
+            } else if (val !== '') {
+                const err = document.createElement('div');
+                err.className = 'output';
+                err.innerHTML = `<span style="color:#ff4757;">Command not recognized: '${val}'. Type 'help' for options.</span>`;
+                history.appendChild(err);
+            }
+
+            window.scrollTo(0, document.body.scrollHeight);
         }
-        animate();
+    });
 
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+    // Keep input focused
+    document.addEventListener('click', () => input.focus());
+</script>
+
 </body>
 </html>
