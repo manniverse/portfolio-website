@@ -25,12 +25,12 @@
             padding: 24px;
         }
 
-        /* Subtle Ambient Glow Matching Pink Panther Tones */
+        /* Ambient Glow Scaled Up to Match Content */
         .ambient-glow {
             position: absolute;
-            width: 320px;
-            height: 320px;
-            background: radial-gradient(circle, rgba(140, 45, 95, 0.08) 0%, rgba(20, 10, 30, 0.04) 50%, transparent 70%);
+            width: 420px;
+            height: 420px;
+            background: radial-gradient(circle, rgba(115, 35, 75, 0.08) 0%, rgba(20, 10, 30, 0.03) 50%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             z-index: 1;
@@ -46,11 +46,11 @@
             align-items: center;
         }
 
-        /* Profile Avatar Frame */
+        /* Avatar Scaled Up Proportionately */
         .avatar-wrap {
-            width: 104px;
-            height: 104px;
-            margin-bottom: 24px;
+            width: 140px;
+            height: 140px;
+            margin-bottom: 30px;
         }
 
         .avatar-wrap img {
@@ -58,42 +58,42 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid rgba(216, 112, 147, 0.15);
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(175, 80, 120, 0.15);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.95);
             filter: brightness(0.9) contrast(1.05);
         }
 
-        /* Typography */
+        /* Typography Scaled Up Proportionately */
         h1 {
-            font-size: 2rem;
+            font-size: 2.7rem;
             font-weight: 600;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
             color: #ffffff;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .handle {
-            font-size: 0.9rem;
+            font-size: 1.15rem;
             font-weight: 400;
-            color: #a36283;
-            margin-bottom: 8px;
+            color: #8c4a6b; /* Slightly deeper pink accent */
+            margin-bottom: 10px;
             font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
         .subtitle {
-            font-size: 0.95rem;
+            font-size: 1.2rem;
             font-weight: 400;
             color: #71717a;
-            margin-bottom: 28px;
+            margin-bottom: 36px;
         }
 
-        /* Site Status Badge - Darkened Pink Panther Accent */
+        /* Site Status Badge - Scaled & Deeper Pink Tone */
         .status-badge {
-            font-size: 0.8rem;
-            color: #d881ab;
-            background: rgba(35, 12, 25, 0.6);
-            border: 1px solid rgba(180, 70, 120, 0.25);
-            padding: 8px 20px;
+            font-size: 1rem;
+            color: #b8658d; /* Darkened pink tone */
+            background: rgba(28, 10, 20, 0.65);
+            border: 1px solid rgba(145, 50, 95, 0.25);
+            padding: 10px 26px;
             border-radius: 30px;
             backdrop-filter: blur(10px);
             letter-spacing: 0.3px;
@@ -104,7 +104,7 @@
             position: absolute;
             bottom: 24px;
             right: 24px;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: #3f3f46;
             letter-spacing: 0.5px;
             z-index: 2;
@@ -113,7 +113,7 @@
         @media (max-width: 600px) {
             footer {
                 position: static;
-                margin-top: 40px;
+                margin-top: 48px;
                 text-align: center;
             }
         }
