@@ -3,150 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETRANQUIEM // TERMINAL</title>
+    <title>ETRANQUIEM // REQ</title>
     <style>
+        :root {
+            --bg: #050505;
+            --wire: #1a1a1a;
+            --border: #262626;
+            --text-main: #ffffff;
+            --text-dim: #737373;
+            --accent: #ffffff;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none;
         }
+
         body {
-            background-color: #080808;
-            color: #00ff66;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 20px;
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             min-height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
+            padding: 40px;
+            position: relative;
         }
-        /* Scanline effect */
-        body::before {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px;
-            z-index: 10;
-            pointer-events: none;
-        }
-        .terminal {
-            max-width: 800px;
+
+        /* Tech Grid Background */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin: 0 auto;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
             z-index: 1;
         }
-        pre {
-            font-size: 0.7rem;
-            line-height: 1.1;
-            color: #00ff66;
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-            word-break: break-all;
+
+        /* Spotlight Cursor Glow */
+        .spotlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.05), transparent 40%);
+            z-index: 2;
         }
-        @media (min-width: 600px) {
-            pre { font-size: 0.9rem; }
+
+        /* UI Overlay Corners (Batman HUD style) */
+        .hud-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--text-dim);
+            z-index: 5;
+            opacity: 0.5;
         }
-        .output {
-            line-height: 1.6;
-            margin-bottom: 10px;
-            color: #b0ffce;
-        }
-        .input-line {
+        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        /* Navigation Header */
+        header {
+            position: relative;
+            z-index: 10;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        .prompt {
-            color: #00ff66;
-            margin-right: 10px;
+
+        .brand {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
-        input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-            flex: 1;
+
+        .status {
+            font-family: monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        a {
-            color: #ff0055;
-            text-decoration: underline;
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff;
+            animation: pulse 2s infinite;
         }
-        .dim {
-            color: #558866;
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Hero Section */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .meta-tag {
+            font-family: monospace;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 6.5rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 0.9;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #555555 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quote {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 300;
+            color: #a3a3a3;
+            line-height: 1.6;
+            max-width: 600px;
+            border-left: 1px solid var(--border);
+            padding-left: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Tech Spec Bar */
+        .specs {
+            display: flex;
+            gap: 40px;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .specs span {
+            color: var(--text-main);
+        }
+
+        /* Buttons */
+        .actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn {
+            position: relative;
+            text-decoration: none;
+            color: var(--text-main);
+            font-family: monospace;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 24px; }
+            .specs { flex-direction: column; gap: 8px; }
+            footer { flex-direction: column; gap: 8px; }
         }
     </style>
 </head>
 <body>
 
-<div class="terminal">
-<pre>
- _____ _____ ____    _    _   _  ___  _   _ ___ _____ __  __ 
-| ____|_   _|  _ \  / \  | \ | |/ _ \| | | |_ _| ____|  \/  |
-|  _|   | | | |_) |/ _ \ |  \| | | | | | | | | |  _| | |\/| |
-| |___  | | |  _ < / ___ \| |\  | |_| | |_| | | | |___| |  | |
-|_____| |_| |_| \_/_/   \_\_| \_|\__\_\\___/ |___|_____|_|  |_|
-</pre>
+    <div class="grid-bg"></div>
+    <div class="spotlight" id="spotlight"></div>
 
-    <div id="history">
-        <div class="output">
-            SYSTEM STATUS: <span style="color: #ffaa00;">DEVELOPMENT IN PROGRESS...</span><br>
-            USER: Req (Animator & 3D Modeler)<br>
-            <span class="dim">Type <span style="color:#fff;">'help'</span> to see available terminal commands.</span>
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+
+    <header>
+        <div class="brand">ETRANQUIEM</div>
+        <div class="status">
+            <div class="status-dot"></div>
+            SYS.LOC // OFFLINE
         </div>
-    </div>
+    </header>
 
-    <div class="input-line">
-        <span class="prompt">req@etranquiem:~$</span>
-        <input type="text" id="cmd" autofocus autocomplete="off" spellcheck="false">
-    </div>
-</div>
+    <main>
+        <div class="meta-tag">/// 3D ANIMATION & MODELING</div>
+        <h1>REQ</h1>
+        <p class="quote">"We buy things we don't need with money we don't have to impress people we don't like."</p>
+        
+        <div class="specs">
+            <div>CORE: <span>BLENDER / THREE.JS</span></div>
+            <div>STATUS: <span>BUILDING ARCHIVE</span></div>
+            <div>VERSION: <span>2.0.26</span></div>
+        </div>
 
-<script>
-    const input = document.getElementById('cmd');
-    const history = document.getElementById('history');
+        <div class="actions">
+            <a href="https://discord.com" target="_blank" class="btn">DISCORD</a>
+            <a href="mailto:your-email@gmail.com" class="btn">INQUIRE</a>
+        </div>
+    </main>
 
-    const commands = {
-        'help': 'Available commands: <br>- <span style="color:#fff;">about</span>: User & server info<br>- <span style="color:#fff;">quote</span>: Profile message<br>- <span style="color:#fff;">socials</span>: External links<br>- <span style="color:#fff;">clear</span>: Clear screen',
-        'about': 'REQ // Animator & 3D Modeler.<br>Currently assembling assets & portfolio render reels.',
-        'quote': '"We buy things we don\'t need with money we don\'t have to impress people we don\'t like."',
-        'socials': 'DISCORD: etranquiem<br>CONTACT: <a href="mailto:your-email@gmail.com">Send Mail</a>',
-        'clear': 'CLEAR'
-    };
+    <footer>
+        <div>COORDINATES: 47.6062° N, 122.3321° W</div>
+        <div>© ETRANQUIEM. ALL RIGHTS RESERVED.</div>
+    </footer>
 
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const val = input.value.trim().toLowerCase();
-            input.value = '';
-
-            const line = document.createElement('div');
-            line.className = 'output';
-            line.innerHTML = `<span class="prompt">req@etranquiem:~$</span> ${val}`;
-            history.appendChild(line);
-
-            if (val === 'clear') {
-                history.innerHTML = '';
-            } else if (commands[val]) {
-                const res = document.createElement('div');
-                res.className = 'output';
-                res.innerHTML = commands[val];
-                history.appendChild(res);
-            } else if (val !== '') {
-                const err = document.createElement('div');
-                err.className = 'output';
-                err.innerHTML = `<span style="color:#ff4757;">Command not recognized: '${val}'. Type 'help' for options.</span>`;
-                history.appendChild(err);
-            }
-
-            window.scrollTo(0, document.body.scrollHeight);
-        }
-    });
-
-    // Keep input focused
-    document.addEventListener('click', () => input.focus());
-</script>
-
+    <script>
+        // Track mouse position for dynamic HUD spotlight effect
+        const spotlight = document.getElementById('spotlight');
+        window.addEventListener('mousemove', (e) => {
+            spotlight.style.setProperty('--x', `${e.clientX}px`);
+            spotlight.style.setProperty('--y', `${e.clientY}px`);
+        });
+    </script>
 </body>
 </html>
