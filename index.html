@@ -6,13 +6,12 @@
     <title>Etranquiem • Reqium</title>
     <style>
         :root {
-            --bg: #050507;
-            --card-bg: rgba(12, 12, 15, 0.7);
-            --border: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.2);
-            --text-primary: #f1f5f9;
+            --bg: #0a0a0a;
+            --card-bg: #121212;
+            --border: #222222;
+            --text-primary: #ffffff;
             --text-secondary: #888888;
-            --text-muted: #444444;
+            --text-muted: #555555;
         }
 
         * {
@@ -25,75 +24,31 @@
         body {
             background-color: var(--bg);
             color: var(--text-primary);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
             position: relative;
+            padding: 24px;
         }
 
-        /* Subdued Tech Grid Background */
-        .grid-bg {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 1;
-        }
-
-        /* Moonlight Cursor Glow Effect */
-        .spotlight {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.03), transparent 60%);
-            z-index: 2;
-        }
-
-        /* HUD Corner Brackets */
-        .corner {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            border: 1px solid var(--text-muted);
-            opacity: 0.4;
-            z-index: 5;
-        }
-        .top-left { top: 24px; left: 24px; border-right: none; border-bottom: none; }
-        .top-right { top: 24px; right: 24px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 24px; left: 24px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 24px; right: 24px; border-left: none; border-top: none; }
-
-        /* Centered Stealth Card Container */
+        /* Centered Modern Card */
         .card {
-            position: relative;
-            z-index: 10;
-            width: 90%;
-            max-width: 420px;
-            padding: 40px 32px;
+            width: 100%;
+            max-width: 400px;
+            padding: 48px 36px;
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
-            transition: border-color 0.4s ease;
-        }
-
-        .card:hover {
-            border-color: var(--border-hover);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
         }
 
         /* Profile Avatar Frame */
         .avatar-wrap {
-            position: relative;
-            width: 108px;
-            height: 108px;
+            width: 100px;
+            height: 100px;
             margin: 0 auto 24px;
         }
 
@@ -103,12 +58,11 @@
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--border);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
-        /* Mixed-Case Typography */
+        /* Clean Modern Typography */
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 600;
             letter-spacing: -0.5px;
             color: var(--text-primary);
@@ -116,58 +70,43 @@
         }
 
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 400;
             color: var(--text-secondary);
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
-        /* Status Badge */
+        /* Site Status Badge */
         .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-            font-size: 0.75rem;
+            display: inline-block;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            background: rgba(255, 255, 255, 0.02);
+            background: #181818;
             border: 1px solid var(--border);
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 30px;
         }
 
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #ffffff;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.9; }
-        }
-
-        /* Domain Footer Anchor */
-        .brand-footer {
-            margin-top: 28px;
+        /* Bottom Right Copyright */
+        footer {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
             font-size: 0.75rem;
             color: var(--text-muted);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 600px) {
+            footer {
+                position: static;
+                margin-top: 32px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="grid-bg"></div>
-    <div class="spotlight" id="spotlight"></div>
-
-    <div class="corner top-left"></div>
-    <div class="corner top-right"></div>
-    <div class="corner bottom-left"></div>
-    <div class="corner bottom-right"></div>
 
     <div class="card">
         <div class="avatar-wrap">
@@ -178,21 +117,13 @@
         <div class="subtitle">3D Modeler & Animator</div>
 
         <div class="status-badge">
-            <span class="status-dot"></span>
-            <span>Site under progress</span>
-        </div>
-
-        <div class="brand-footer">
-            etranquiem.com
+            Site is in progress
         </div>
     </div>
 
-    <script>
-        const spotlight = document.getElementById('spotlight');
-        window.addEventListener('mousemove', (e) => {
-            spotlight.style.setProperty('--x', `${e.clientX}px`);
-            spotlight.style.setProperty('--y', `${e.clientY}px`);
-        });
-    </script>
+    <footer>
+        © Etranquiem. All rights reserved.
+    </footer>
+
 </body>
 </html>
