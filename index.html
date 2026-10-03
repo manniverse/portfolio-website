@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETRANQUIEM // REQ</title>
+    <title>ETRANQUIEM // REQIUM</title>
     <style>
         :root {
             --bg: #050505;
-            --wire: #1a1a1a;
             --border: #262626;
             --text-main: #ffffff;
-            --text-dim: #737373;
-            --accent: #ffffff;
+            --text-dim: #666666;
         }
 
         * {
@@ -56,18 +54,18 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.05), transparent 40%);
+            background: radial-gradient(800px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.06), transparent 40%);
             z-index: 2;
         }
 
-        /* UI Overlay Corners (Batman HUD style) */
+        /* Tactical HUD Corner Brackets */
         .hud-corner {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 1px solid var(--text-dim);
             z-index: 5;
-            opacity: 0.5;
+            opacity: 0.4;
         }
         .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
         .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
@@ -84,9 +82,9 @@
         }
 
         .brand {
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 4px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 5px;
             text-transform: uppercase;
         }
 
@@ -97,7 +95,10 @@
             color: var(--text-dim);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .status-dot {
@@ -110,92 +111,72 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
+            0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
         }
 
-        /* Main Hero Section */
+        /* Centered Hero Content */
         main {
             position: relative;
             z-index: 10;
-            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: auto;
         }
 
-        .meta-tag {
-            font-family: monospace;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 16px;
+        /* Profile Picture Ring */
+        .pfp-container {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            padding: 4px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 28px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
-        h1 {
-            font-size: clamp(3rem, 8vw, 6.5rem);
+        .pfp-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(110%);
+        }
+
+        .name {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 900;
-            letter-spacing: -2px;
-            line-height: 0.9;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-bottom: 24px;
-            background: linear-gradient(180deg, #FFFFFF 0%, #555555 100%);
+            line-height: 1;
+            margin-bottom: 12px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #444444 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .quote {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            font-weight: 300;
-            color: #a3a3a3;
-            line-height: 1.6;
-            max-width: 600px;
-            border-left: 1px solid var(--border);
-            padding-left: 20px;
-            margin-bottom: 40px;
-        }
-
-        /* Tech Spec Bar */
-        .specs {
-            display: flex;
-            gap: 40px;
-            font-family: monospace;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-        }
-
-        .specs span {
-            color: var(--text-main);
-        }
-
-        /* Buttons */
-        .actions {
-            display: flex;
-            gap: 16px;
-        }
-
-        .btn {
-            position: relative;
-            text-decoration: none;
-            color: var(--text-main);
+        .role {
             font-family: monospace;
             font-size: 0.85rem;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
+            color: var(--text-dim);
             text-transform: uppercase;
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow: hidden;
+            margin-bottom: 24px;
         }
 
-        .btn:hover {
-            background: #ffffff;
-            color: #000000;
-            border-color: #ffffff;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+        .progress-tag {
+            font-family: monospace;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.02);
         }
 
         /* Footer */
@@ -205,15 +186,14 @@
             display: flex;
             justify-content: space-between;
             font-family: monospace;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         @media (max-width: 768px) {
             body { padding: 24px; }
-            .specs { flex-direction: column; gap: 8px; }
-            footer { flex-direction: column; gap: 8px; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
         }
     </style>
 </head>
@@ -231,34 +211,27 @@
         <div class="brand">ETRANQUIEM</div>
         <div class="status">
             <div class="status-dot"></div>
-            SYS.LOC // OFFLINE
+            IN PROGRESS
         </div>
     </header>
 
     <main>
-        <div class="meta-tag">/// 3D ANIMATION & MODELING</div>
-        <h1>REQ</h1>
-        <p class="quote">"We buy things we don't need with money we don't have to impress people we don't like."</p>
-        
-        <div class="specs">
-            <div>CORE: <span>BLENDER / THREE.JS</span></div>
-            <div>STATUS: <span>BUILDING ARCHIVE</span></div>
-            <div>VERSION: <span>2.0.26</span></div>
+        <div class="pfp-container">
+            <!-- Replace avatar.jpg with your image file path if hosted in repo -->
+            <img src="https://github.com/manniverse.png" alt="Reqium Avatar">
         </div>
 
-        <div class="actions">
-            <a href="https://discord.com" target="_blank" class="btn">DISCORD</a>
-            <a href="mailto:your-email@gmail.com" class="btn">INQUIRE</a>
-        </div>
+        <h1 class="name">REQIUM</h1>
+        <div class="role">3D MODELER & ANIMATOR</div>
+        <div class="progress-tag">/// SITE UNDER PROGRESS ///</div>
     </main>
 
     <footer>
-        <div>COORDINATES: 47.6062° N, 122.3321° W</div>
-        <div>© ETRANQUIEM. ALL RIGHTS RESERVED.</div>
+        <div>ETRANQUIEM.COM</div>
+        <div>SYSTEM // ONLINE</div>
     </footer>
 
     <script>
-        // Track mouse position for dynamic HUD spotlight effect
         const spotlight = document.getElementById('spotlight');
         window.addEventListener('mousemove', (e) => {
             spotlight.style.setProperty('--x', `${e.clientX}px`);
