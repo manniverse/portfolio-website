@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETRANQUIEM // REQIUM</title>
+    <title>Etranquiem • Reqium</title>
     <style>
         :root {
-            --bg: #030304;
-            --border: #1a1a1a;
-            --text-main: #e5e5e5;
-            --text-dim: #444444;
-            --text-muted: #222222;
+            --bg: #050507;
+            --card-bg: rgba(12, 12, 15, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text-primary: #f1f5f9;
+            --text-secondary: #888888;
+            --text-muted: #444444;
         }
 
         * {
@@ -22,94 +24,125 @@
 
         body {
             background-color: var(--bg);
-            color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
             min-height: 100vh;
-            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 40px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             position: relative;
         }
 
-        /* Darker, Subdued Grid Background */
+        /* Subdued Tech Grid Background */
         .grid-bg {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-image: 
                 linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background-size: 50px 50px;
             z-index: 1;
         }
 
-        /* Subtle Dynamic Spotlight */
+        /* Moonlight Cursor Glow Effect */
         .spotlight {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             pointer-events: none;
-            background: radial-gradient(700px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.025), transparent 50%);
+            background: radial-gradient(600px circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.03), transparent 60%);
             z-index: 2;
         }
 
         /* HUD Corner Brackets */
-        .hud-corner {
+        .corner {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 1px solid var(--border);
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--text-muted);
+            opacity: 0.4;
             z-index: 5;
-            opacity: 0.6;
         }
-        .top-left { top: 20px; left: 20px; border-right: none; border-bottom: none; }
-        .top-right { top: 20px; right: 20px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 20px; left: 20px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+        .top-left { top: 24px; left: 24px; border-right: none; border-bottom: none; }
+        .top-right { top: 24px; right: 24px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 24px; left: 24px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 24px; right: 24px; border-left: none; border-top: none; }
 
-        /* Navigation Header */
-        header {
+        /* Centered Stealth Card Container */
+        .card {
             position: relative;
             z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            width: 90%;
+            max-width: 420px;
+            padding: 40px 32px;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9);
+            transition: border-color 0.4s ease;
         }
 
-        .brand {
-            font-size: 0.85rem;
-            font-weight: 800;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #888888;
+        .card:hover {
+            border-color: var(--border-hover);
         }
 
-        .status {
-            font-family: monospace;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            display: flex;
+        /* Profile Avatar Frame */
+        .avatar-wrap {
+            position: relative;
+            width: 108px;
+            height: 108px;
+            margin: 0 auto 24px;
+        }
+
+        .avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Mixed-Case Typography */
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
-            padding: 6px 14px;
-            background: rgba(0, 0, 0, 0.6);
+            padding: 8px 18px;
+            border-radius: 20px;
         }
 
         .status-dot {
-            width: 5px;
-            height: 5px;
-            background-color: #888;
+            width: 6px;
+            height: 6px;
+            background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 6px #888;
-            animation: pulse 2.5s infinite;
+            box-shadow: 0 0 8px #ffffff;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -117,99 +150,12 @@
             50% { opacity: 0.9; }
         }
 
-        /* Centered Hero Card & Content */
-        main {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin: auto;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        /* Profile Picture Ring */
-        .pfp-container {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            padding: 3px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.01);
-            margin-bottom: 24px;
-            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
-        }
-
-        .pfp-container img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            filter: grayscale(100%) contrast(120%) brightness(85%);
-        }
-
-        .meta-tag {
-            font-family: monospace;
+        /* Domain Footer Anchor */
+        .brand-footer {
+            margin-top: 28px;
             font-size: 0.75rem;
-            letter-spacing: 3px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .name {
-            font-size: clamp(2.5rem, 5vw, 4.2rem);
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            line-height: 1;
-            margin-bottom: 12px;
-            background: linear-gradient(180deg, #CCCCCC 0%, #222222 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .role {
-            font-family: monospace;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            color: #666666;
-            text-transform: uppercase;
-            margin-bottom: 32px;
-        }
-
-        /* Sleek Status Box */
-        .progress-box {
-            font-family: monospace;
-            font-size: 0.75rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #a3a3a3;
-            border: 1px solid var(--border);
-            padding: 12px 28px;
-            background: rgba(10, 10, 12, 0.7);
-            backdrop-filter: blur(8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Footer */
-        footer {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            font-family: monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            letter-spacing: 2px;
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 24px; }
-            footer { flex-direction: column; gap: 8px; text-align: center; }
+            color: var(--text-muted);
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -218,35 +164,28 @@
     <div class="grid-bg"></div>
     <div class="spotlight" id="spotlight"></div>
 
-    <div class="hud-corner top-left"></div>
-    <div class="hud-corner top-right"></div>
-    <div class="hud-corner bottom-left"></div>
-    <div class="hud-corner bottom-right"></div>
+    <div class="corner top-left"></div>
+    <div class="corner top-right"></div>
+    <div class="corner bottom-left"></div>
+    <div class="corner bottom-right"></div>
 
-    <header>
-        <div class="brand">ETRANQUIEM</div>
-        <div class="status">
-            <div class="status-dot"></div>
-            SYS.LOC // OFFLINE
-        </div>
-    </header>
-
-    <main>
-        <div class="pfp-container">
-            <img src="https://github.com/manniverse.png" alt="Reqium Avatar">
+    <div class="card">
+        <div class="avatar-wrap">
+            <img src="1010635972622519810.jpg" alt="Reqium Avatar">
         </div>
 
-        <div class="meta-tag">/// IDENTITY</div>
-        <h1 class="name">REQIUM</h1>
-        <div class="role">3D MODELER & ANIMATOR</div>
+        <h1>Reqium</h1>
+        <div class="subtitle">3D Modeler & Animator</div>
 
-        <div class="progress-box">SITE UNDER PROGRESS</div>
-    </main>
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>Site under progress</span>
+        </div>
 
-    <footer>
-        <div>ETRANQUIEM.COM</div>
-        <div>STATION // ONLINE</div>
-    </footer>
+        <div class="brand-footer">
+            etranquiem.com
+        </div>
+    </div>
 
     <script>
         const spotlight = document.getElementById('spotlight');
