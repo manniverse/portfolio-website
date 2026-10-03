@@ -5,15 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etranquiem • Reqium</title>
     <style>
-        :root {
-            --bg: #0a0a0a;
-            --card-bg: #121212;
-            --border: #222222;
-            --text-primary: #ffffff;
-            --text-secondary: #888888;
-            --text-muted: #555555;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -22,34 +13,44 @@
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-primary);
+            background-color: #030204;
+            color: #f1f1f5;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
             padding: 24px;
         }
 
-        /* Centered Modern Card */
-        .card {
-            width: 100%;
-            max-width: 400px;
-            padding: 48px 36px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+        /* Subtle Ambient Glow Matching Pink Panther Tones */
+        .ambient-glow {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(140, 45, 95, 0.08) 0%, rgba(20, 10, 30, 0.04) 50%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Centered Content Wrapper */
+        .content {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         /* Profile Avatar Frame */
         .avatar-wrap {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 24px;
+            width: 104px;
+            height: 104px;
+            margin-bottom: 24px;
         }
 
         .avatar-wrap img {
@@ -57,50 +58,62 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid var(--border);
+            border: 1px solid rgba(216, 112, 147, 0.15);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.9);
+            filter: brightness(0.9) contrast(1.05);
         }
 
-        /* Clean Modern Typography */
+        /* Typography */
         h1 {
-            font-size: 1.75rem;
+            font-size: 2rem;
             font-weight: 600;
             letter-spacing: -0.5px;
-            color: var(--text-primary);
-            margin-bottom: 6px;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .handle {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #a36283;
+            margin-bottom: 8px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
         .subtitle {
             font-size: 0.95rem;
             font-weight: 400;
-            color: var(--text-secondary);
+            color: #71717a;
             margin-bottom: 28px;
         }
 
-        /* Site Status Badge */
+        /* Site Status Badge - Darkened Pink Panther Accent */
         .status-badge {
-            display: inline-block;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            background: #181818;
-            border: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: #d881ab;
+            background: rgba(35, 12, 25, 0.6);
+            border: 1px solid rgba(180, 70, 120, 0.25);
             padding: 8px 20px;
             border-radius: 30px;
+            backdrop-filter: blur(10px);
+            letter-spacing: 0.3px;
         }
 
-        /* Bottom Right Copyright */
+        /* Fixed Bottom Right Copyright */
         footer {
             position: absolute;
             bottom: 24px;
             right: 24px;
             font-size: 0.75rem;
-            color: var(--text-muted);
+            color: #3f3f46;
             letter-spacing: 0.5px;
+            z-index: 2;
         }
 
         @media (max-width: 600px) {
             footer {
                 position: static;
-                margin-top: 32px;
+                margin-top: 40px;
                 text-align: center;
             }
         }
@@ -108,12 +121,15 @@
 </head>
 <body>
 
-    <div class="card">
+    <div class="ambient-glow"></div>
+
+    <div class="content">
         <div class="avatar-wrap">
-            <img src="1010635972622519810.jpg" alt="Reqium Avatar">
+            <img src="avatar.jpg" alt="Reqium Avatar">
         </div>
 
         <h1>Reqium</h1>
+        <div class="handle">@etranquiem</div>
         <div class="subtitle">3D Modeler & Animator</div>
 
         <div class="status-badge">
